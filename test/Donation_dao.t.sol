@@ -10,9 +10,28 @@ contract CounterTest is Test {
     function setUp() public {
         dao = new Donation_Dao();
     }
-    function testUserCanCreateCampaigns() private {
-        dao = new Donation_Dao();
-        dao.createNewCampaign("campaign title", "campaign description",1,1000000);
-        assertEq(dao.getTotalCampaigns(),1);
+
+    function test_userCanCreateCampaigns() public {
+        assertEq(0, dao.getTotalCampaigns());
+        dao.createNewCampaign("campaign title", "campaign description", 50, 1000000);
+        assertEq(1, dao.getTotalCampaigns());
+    }
+
+    function test_invalidCreationFails() public {
+        assertEq(0, dao.getTotalCampaigns());
+        vm.expectRevert(bytes("Title cannot be blank"));
+        dao.createNewCampaign("", "", 2 ether, 0);
+        assertEq(0, dao.getTotalCampaigns());
+        vm.expectRevert(bytes("Description cannot be blank"));
+        dao.createNewCampaign("Title", "", 2 ether, 0);
+        assertEq(0, dao.getTotalCampaigns());
+        vm.expectRevert(bytes("Target price must be greater than 0"));
+        dao.createNewCampaign("Title", "description", 0, 0);
+        assertEq(0, dao.getTotalCampaigns());
+        vm.expectRevert(bytes("validity time must be in future"));
+        dao.createNewCampaign("Title", "description", 2, 0);
+        assertEq(0, dao.getTotalCampaigns());
+        dao.createNewCampaign("campaign title", "campaign description", 50, 1000000);
+        assertEq(1,dao.getTotalCampaigns());
     }
 }
