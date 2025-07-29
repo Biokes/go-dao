@@ -70,6 +70,30 @@ Organize your project as follows:
 - **Scripts**: Hardhat scripts for deployment.
 - **Docs**: A README with instructions.
 
+## Project functionalities
+
+- Create a new donation campaign
+- Store and manage multiple donation campaigns
+- Assign a unique ID to each campaign
+- Receive and hold ETH donations from users
+- Track how much each donor has contributed to a campaign
+- Accumulate total donations for each campaign
+- Restrict donations after the campaign deadline
+- Designate a trusted escrow address at deployment
+- Enable the escrow to approve fund release to campaign creator
+- Enable the escrow to reject a campaign
+- Transfer funds to campaign creator when approved by escrow
+- Unlock refund rights to donors if campaign fails or is rejected
+- Allow donors to withdraw their ETH contributions as refunds
+- Emit events for major actions (create, donate, release, refund, reject)
+- Expose campaign data to users (title, goal, deadline, etc.)
+- Report current campaign status (active, successful, failed, rejected)
+- Protect state-changing functions using modifiers (e.g. onlyEscrow)
+- Prevent reentrancy attacks during ETH withdrawals
+- Provide public access to individual donor contributions
+- Automatically update campaign status based on goal or time
+
+
 ## Step-by-Step Instructions
 
 ### 1. Environment Setup
@@ -180,9 +204,12 @@ Organize your project as follows:
 - **Testing**: Write tests for edge cases and fuzz inputs.
 
 ## Resources
-- **Solidity**: https://docs.soliditylang.org
-- **Hardhat**: https://hardhat.org
-- **Foundry**: https://book.getfoundry.sh
-- **OpenZeppelin**: https://docs.openzeppelin.com/contracts
-- **Sepolia**: Alchemy (https://alchemy.com) or Infura (https://infura.io)
-- **Security**: ConsenSys Best Practices (https://consensys.github.io/smart-contract-best-practices/)
+- [**Solidity**: ](https://docs.soliditylang.org)
+- [**Hardhat**: ](https://hardhat.org)
+- [**Foundry**: ](https://book.getfoundry.sh)
+- [**OpenZeppelin**:](https://docs.openzeppelin.com/contracts)
+- **Sepolia**:
+  - [ Alchemy ](https://alchemy.com)
+  - [Infura ](https://infura.io)
+- **Security**: 
+  - [ConsenSys Best Practices ](https://consensys.github.io/smart-contract-best-practices/)
