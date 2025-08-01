@@ -51,13 +51,13 @@ contract DonationTest is Test {
 
      function test_donationsCanBeUpdated() public {
          Campaign memory campaign = dao.createNewCampaign("title", "description", 3, 100000000);
-         logCampaign(campaign);
+        //  logCampaign(campaign);
          vm.expectRevert(bytes("Title cannot be blank"));
          dao.updateCampaign(campaign.id, "", "");
          vm.expectRevert(bytes("Description cannot be blank"));
          dao.updateCampaign(campaign.id, "title 01", "");
          assertEq(1,dao.getTotalCampaigns());
-         logCampaign(campaign);
+        //  logCampaign(campaign);
          Campaign memory updatedCampaign = dao.updateCampaign(campaign.id, "title 01", "desc");
          assertEq("title 01", updatedCampaign.title);
          assertEq("desc", updatedCampaign.description);
@@ -67,7 +67,17 @@ contract DonationTest is Test {
          assertEq(campaign.validityPeriod,updatedCampaign.validityPeriod);
          assertEq(campaign.goal,updatedCampaign.goal);
      }
-
+     function test_campaignsCanbeSentEther() public {
+         address user101 = address(0x123456);
+         vm.prank(user101);
+         dao.createNewCampaign("title", "description", 3, 100000000);         address user102 = address(0x12345);
+         vm.deal(user101, 10 ether);
+         vm.prank(user102);
+         dao.donate(0.09);
+        //  (bool success, ) = payable(address(dao)).call{value: 19103980984108 wei}("");
+        //  assertTrue(success);
+         assertEq(address(dao).balance, 19103 wei);
+     }
 }
  // TODO
  //- Create a new donation campaign ✅

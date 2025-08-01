@@ -65,6 +65,9 @@ error INVALID_DATA();
          require(bytes(title).length> 0,"Title cannot be blank");
          require(bytes(description).length> 0,"Description cannot be blank");
      }
+     function donateToCampaign(uint campaignId, uint amount) external payable{
+        
+     }
  }
 
 
