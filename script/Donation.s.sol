@@ -2,18 +2,14 @@
 pragma solidity ^0.8.13;
 
 import {Script} from "forge-std/Script.sol";
-import {Counter} from "../src/Counter.sol";
+import {Donation_Dao} from "../src/Donation.sol";
 
 contract CounterScript is Script {
-    Counter public counter;
-
+    Donation_Dao public counter;
     function setUp() public {}
-
     function run() public {
         vm.startBroadcast();
-
-        counter = new Counter();
-
+        counter = new Donation_Dao();
         vm.stopBroadcast();
     }
 }
