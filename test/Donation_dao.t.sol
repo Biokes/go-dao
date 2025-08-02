@@ -70,21 +70,20 @@ contract DonationTest is Test {
      function test_campaignsCanbeSentEther() public {
          address user101 = address(0x123456);
          vm.prank(user101);
-         dao.createNewCampaign("title", "description", 3, 100000000);         address user102 = address(0x12345);
-         vm.deal(user101, 10 ether);
+         Campaign memory campaign = dao.createNewCampaign("title", "description", 3 ether, 100000000);         address user102 = address(0x12345);
+         vm.deal(user101, 0 ether);
          vm.prank(user102);
-         dao.donate(0.09);
-        //  (bool success, ) = payable(address(dao)).call{value: 19103980984108 wei}("");
-        //  assertTrue(success);
-         assertEq(address(dao).balance, 19103 wei);
+         vm.deal(user102, 1.8 ether);
+         dao.donateToCampaign{value: 0.008934 ether}(campaign.id, user101);
+         assertEq(address(dao).balance, 0.008934 ether);
      }
 }
  // TODO
  //- Create a new donation campaign ✅
  //- Store and manage multiple donation campaigns✅
  //- Assign a unique ID to each campaign✅
+ //- Receive and hold ETH donations from users ✅
 
- //- Receive and hold ETH donations from users
  //- Track how much each donor has contributed to a campaign
  //- Accumulate total donations for each campaign
  //- Restrict donations after the campaign deadline

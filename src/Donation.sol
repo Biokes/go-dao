@@ -65,8 +65,23 @@ error INVALID_DATA();
          require(bytes(title).length> 0,"Title cannot be blank");
          require(bytes(description).length> 0,"Description cannot be blank");
      }
-     function donateToCampaign(uint campaignId, uint amount) external payable{
-        
+
+     fallback() external payable {}
+     
+     receive() external payable {}
+
+     function donateToCampaign(uint campaignId,address owner) external payable{
+        require(msg.value > 0, "No ETH sent");
+        if(usersCampaigns[owner].length == 0){
+            revert INVALID_DATA();
+        }
+        for(uint loopCounter;loopCounter< usersCampaigns[owner].length;loopCounter++){
+            if(usersCampaigns[owner][loopCounter].id == campaignId){
+                usersCampaigns[owner][loopCounter].totalRaised += msg.value;
+                return;
+            }
+        }
+        revert INVALID_DATA();
      }
  }
 
