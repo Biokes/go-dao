@@ -3,7 +3,7 @@
 pragma solidity ^0.8.28;
 
 library DiamondLibrary {
-    struct ERC20Storage {
+    struct DiamondStorage {
         string _name;
         string _symbol;
         uint8 _decimal;

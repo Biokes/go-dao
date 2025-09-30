@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
-import "../src/Donation.sol";
-import {Donation_Dao} from "../src/Donation.sol";
+import "../../src/hackOps/Donation.sol";
+import {Donation_Dao} from "../../src/hackOps//Donation.sol";
 import {Test} from "forge-std/Test.sol";
 import "forge-std/console.sol";
 

@@ -2,8 +2,8 @@
 pragma solidity ^0.8.26;
 
 import "forge-std/Test.sol";
-import {StakingRewards, IERC20} from "src/Staking.sol";
-import {MockERC20} from "test/MockErc20.sol";
+import {StakingRewards, IERC20} from "../../src/hackOps/Staking.sol";
+import {MockERC20} from "test/hackOps/MockErc20.sol";
 
 contract StakingTest is Test {
     StakingRewards staking;
