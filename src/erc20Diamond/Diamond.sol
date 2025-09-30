@@ -5,6 +5,9 @@ import {DiamondLibrary} from "./libs/DiamondLibrary.sol";
 
 contract ERC20Diamond{
     DiamondLibrary.DiamondStorage public token;
-    mapping (bytes4=> address) facetsAddress;
+    mapping (bytes4=> address) facetsToAddress;
     
+
+    fallback() payable external {}
+    receive() payable external {}
 }
