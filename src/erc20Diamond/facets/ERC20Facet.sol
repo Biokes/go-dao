@@ -67,6 +67,7 @@ contract ERC20Facet is IERC20 {
         emit Transfer(from, to, amount);
         return true;
     }
+    
     function mint(uint256 amount) external {
         DiamondLibrary.DiamondStorage storage ds = DiamondLibrary.diamondStorage();
         ds._totalSupply += amount;

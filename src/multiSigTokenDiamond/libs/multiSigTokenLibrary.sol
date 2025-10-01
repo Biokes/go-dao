@@ -61,11 +61,9 @@ library MultiSigTokenUtils {
     function diamondCut(IDiamond.FacetCut[] memory _diamondCut,address _init,bytes memory _calldata) internal {
         DiamondStorage storage ds = getDiamondStorage();
         for (uint256 i = 0; i < _diamondCut.length; i++) {
-
             IDiamond.FacetCut memory facetCut = _diamondCut[i];
             address facet_address = facetCut.facetAddress;
             IDiamond.FacetCutAction action = facetCut.action;
-
             if (action == IDiamond.FacetCutAction.Add) {
                 addFacet(ds, facet_address, facetCut.functionSelectors);
             } else if (action == IDiamond.FacetCutAction.Replace) {
@@ -129,6 +127,7 @@ library MultiSigTokenUtils {
             });
         }
     }
+    
     function setTokenURI(string calldata tokenURI) internal {
         DiamondStorage storage ds = getDiamondStorage();
         ds.tokenMetaData.tokenURI = tokenURI;
