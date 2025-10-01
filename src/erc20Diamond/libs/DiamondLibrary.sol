@@ -110,7 +110,6 @@ library DiamondLibrary {
                 }
             }
         }
-
         delete ds._facetFunctionSelectors[_facetAddress];
     }
 
