@@ -2,6 +2,8 @@
 
 pragma solidity ^0.8.28;
 
-contract SwapFacet{
-    
+import {ISwapFacet} from "../interfaces/ISwap.sol";
+
+contract SwapFacet is ISwapFacet{
+
 }

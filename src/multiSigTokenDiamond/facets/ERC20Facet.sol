@@ -46,7 +46,6 @@ contract RafikTokenFacet is IERC20{
         MultiSigTokenUtils.DiamondStorage storage ds = MultiSigTokenUtils.getDiamondStorage();
         require(to != address(0), "Cannot transfer to zero address");
         require(ds._balances[msg.sender] >= amount, "Insufficient balance");
-
         ds._balances[msg.sender] -= amount;
         ds._balances[to] += amount;
         emit Transfer(msg.sender, to, amount);
@@ -58,13 +57,13 @@ contract RafikTokenFacet is IERC20{
         require(to != address(0), "Cannot transfer to zero address");
         require(ds._balances[from] >= amount, "Insufficient balance");
         require(ds._allowances[from][msg.sender] >= amount, "Insufficient allowance");
-
         ds._balances[from] -= amount;
         ds._balances[to] += amount;
         ds._allowances[from][msg.sender] -= amount;
         emit Transfer(from, to, amount);
         return true;
     }
+
     function mint(uint256 amount) external {
         MultiSigTokenUtils.DiamondStorage storage ds = MultiSigTokenUtils.getDiamondStorage();
         ds._totalSupply += amount;
