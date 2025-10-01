@@ -14,7 +14,7 @@ library DiamondLibrary {
         uint256 _totalSupply;
         mapping(address => uint256) _balances;
         mapping(address => mapping(address => uint256)) _allowances;
-        address _owner;
+        address _owner; 
         mapping(bytes4 => address) _facets;
         mapping(address => bytes4[]) _facetFunctionSelectors;
         bytes4[] _selectors;
