@@ -27,13 +27,8 @@ library DiamondLibrary {
         }
     }
 
-    function diamondCut(
-        IDiamondCut.FacetCut[] memory _diamondCut,
-        address _init,
-        bytes memory _calldata
-    ) internal {
+    function diamondCut(IDiamondCut.FacetCut[] memory _diamondCut,address _init,bytes memory _calldata) internal {
         DiamondStorage storage ds = diamondStorage();
-
         for (uint256 i = 0; i < _diamondCut.length; i++) {
             IDiamondCut.FacetCut memory facetCut = _diamondCut[i];
             address facet_address = facetCut.facetAddress;
@@ -47,18 +42,13 @@ library DiamondLibrary {
                 removeFacet(ds, facet_address, facetCut.functionSelectors);
             }
         }
-
         if (_init != address(0)) {
             (bool success,) = _init.delegatecall(_calldata);
             require(success, "Initialization failed");
         }
     }
 
-    function addFacet(
-        DiamondStorage storage ds,
-        address _facetAddress,
-        bytes4[] memory _functionSelectors
-    ) internal {
+    function addFacet(DiamondStorage storage ds,address _facetAddress,bytes4[] memory _functionSelectors) internal {
         require(_facetAddress != address(0), "Facet address cannot be zero");
 
         for (uint256 i = 0; i < _functionSelectors.length; i++) {
@@ -72,11 +62,7 @@ library DiamondLibrary {
         ds._facetFunctionSelectors[_facetAddress] = _functionSelectors;
     }
 
-    function replaceFacet(
-        DiamondStorage storage ds,
-        address _facetAddress,
-        bytes4[] memory _functionSelectors
-    ) internal {
+    function replaceFacet(DiamondStorage storage ds,address _facetAddress,bytes4[] memory _functionSelectors) internal {
         require(_facetAddress != address(0), "Facet address cannot be zero");
 
         for (uint256 i = 0; i < _functionSelectors.length; i++) {
@@ -88,13 +74,8 @@ library DiamondLibrary {
         ds._facetFunctionSelectors[_facetAddress] = _functionSelectors;
     }
 
-    function removeFacet(
-        DiamondStorage storage ds,
-        address _facetAddress,
-        bytes4[] memory _functionSelectors
-    ) internal {
+    function removeFacet(DiamondStorage storage ds,address _facetAddress,bytes4[] memory _functionSelectors) internal {
         require(_facetAddress == address(0), "Remove facet address must be zero");
-
         for (uint256 i = 0; i < _functionSelectors.length; i++) {
             bytes4 selector = _functionSelectors[i];
             require(ds._facets[selector] != address(0), "Function does not exist");
