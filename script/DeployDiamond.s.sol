@@ -9,7 +9,7 @@
 
 // contract DeployDiamond is Script{
 //     function run() external {
-//         uint256 deployerPrivateKey = uint();
+//         uint256 deployerPrivateKey = uint(0xPrivate KEy);
 //         vm.startBroadcast(deployerPrivateKey);
 //         ERC20Diamond diamond = new ERC20Diamond();
 //         console.log("Diamond deployed at:", address(diamond));
@@ -21,15 +21,15 @@
 
 //         bytes4[] memory selectors = new bytes4[](1);
 //         selectors[0] = ERC20Facet.name.selector;
-//         // selectors[1] = ERC20Facet.symbol.selector;
-//         // selectors[2] = ERC20Facet.decimals.selector;
-//         // selectors[3] = ERC20Facet.totalSupply.selector;
-//         // selectors[4] = ERC20Facet.balanceOf.selector;
-//         // selectors[5] = ERC20Facet.allowance.selector;
-//         // selectors[6] = ERC20Facet.approve.selector;
-//         // selectors[7] = ERC20Facet.transfer.selector;
-//         // selectors[8] = ERC20Facet.transferFrom.selector;
-//         // selectors[9] = ERC20Facet.mint.selector;
+//         selectors[1] = ERC20Facet.symbol.selector;
+//         selectors[2] = ERC20Facet.decimals.selector;
+//         selectors[3] = ERC20Facet.totalSupply.selector;
+//         selectors[4] = ERC20Facet.balanceOf.selector;
+//         selectors[5] = ERC20Facet.allowance.selector;
+//         selectors[6] = ERC20Facet.approve.selector;
+//         selectors[7] = ERC20Facet.transfer.selector;
+//         selectors[8] = ERC20Facet.transferFrom.selector;
+//         selectors[9] = ERC20Facet.mint.selector;
 
 //         cut[0] = IDiamondCut.FacetCut({
 //             facetAddress: address(erc20Facet),
