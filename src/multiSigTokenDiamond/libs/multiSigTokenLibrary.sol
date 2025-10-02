@@ -6,6 +6,7 @@ import {IDiamondLoupe} from "../interfaces/IDiamondLoupe.sol";
 
 library MultiSigTokenUtils {
     bytes32 constant DIAMOND_STORAGE_POSITION = keccak256("multisig.token.diamond.storage");
+    
 
     struct DiamondStorage {
         string _name;
@@ -157,4 +158,18 @@ library MultiSigTokenUtils {
         return ds._facets[_interfaceId] != address(0);
     }
 
+    function swapEthToToken() internal returns (uint swappedAmount){
+        DiamondStorage storage ds = getDiamondStorage();
+        require(msg.value > 0, "No ETH sent");
+        swappedAmount = (msg.value * 1000);
+        ds._balances[msg.sender] += swappedAmount;
+        ds._totalSupply += swappedAmount;
+    }
+
+    function withdrawEth() internal {
+        DiamondStorage storage ds = getDiamondStorage();
+        uint balance = address(this).balance;
+        (bool success, ) = payable(ds._owner).call{value: balance}("");
+        require(success, "ETH transfer failed");
+    }
 }
