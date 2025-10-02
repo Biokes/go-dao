@@ -2,7 +2,6 @@
 pragma solidity ^0.8.28;
 import {IERC20TokenMetadataFacet} from "../interfaces/ITokenMetatDataFacet.sol";
 import {MultiSigTokenUtils} from "../libs/multiSigTokenLibrary.sol";
-import "@openzeppelin/contracts/utils/Base64.sol";
 
 
 contract TokenMetaDataFacet is IERC20TokenMetadataFacet {

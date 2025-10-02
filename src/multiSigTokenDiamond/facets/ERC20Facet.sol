@@ -79,9 +79,21 @@ contract RafikTokenFacet is IERC20{
         MultiSigTokenUtils.DiamondStorage storage ds = MultiSigTokenUtils.getDiamondStorage();
         require(msg.sender == ds._owner || msg.sender == from, "Only owner or holder can burn");
         require(ds._balances[from] >= amount, "Insufficient balance");
-
         ds._balances[from] -= amount;
         ds._totalSupply -= amount;
         emit Transfer(from, address(0), amount);
+    }
+
+    function getTokenMetaData() external returns(MetaData memory){
+        MultiSigTokenUtils.DiamondStorage storage ds = MultiSigTokenUtils.getDiamondStorage();
+        return ds.tokenMetaData;
+    }
+    function getTokenURI() external returns(string memory){
+         MultiSigTokenUtils.DiamondStorage storage ds = MultiSigTokenUtils.getDiamondStorage();
+        return ds.tokenMetaData.tokenURI;
+    }
+      function getSVG() external returns(string memory){
+         MultiSigTokenUtils.DiamondStorage storage ds = MultiSigTokenUtils.getDiamondStorage();
+        return ds.tokenMetaData.svg;
     }
 }
