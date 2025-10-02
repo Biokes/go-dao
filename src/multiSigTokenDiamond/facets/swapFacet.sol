@@ -16,5 +16,6 @@ contract SwapFacet is ISwap{
 
     function withdrawEth() external payable{
         MultiSigTokenUtils.withdrawEth();
+        emit WithdrawETH(msg.sender, block.timestamp);
     }
 }

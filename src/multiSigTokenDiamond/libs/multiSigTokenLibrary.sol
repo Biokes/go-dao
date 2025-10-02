@@ -6,7 +6,6 @@ import {IDiamondLoupe} from "../interfaces/IDiamondLoupe.sol";
 
 library MultiSigTokenUtils {
     bytes32 constant DIAMOND_STORAGE_POSITION = keccak256("multisig.token.diamond.storage");
-    
 
     struct DiamondStorage {
         string _name;
@@ -168,6 +167,7 @@ library MultiSigTokenUtils {
 
     function withdrawEth() internal {
         DiamondStorage storage ds = getDiamondStorage();
+        require(msg.sender== ds._owner,"Only owner can withdraw eth");
         uint balance = address(this).balance;
         (bool success, ) = payable(ds._owner).call{value: balance}("");
         require(success, "ETH transfer failed");
