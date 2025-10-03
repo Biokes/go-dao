@@ -15,6 +15,7 @@ library MultiSigTokenUtils {
         mapping(address => uint256) _balances;
         mapping(address => mapping(address => uint256)) _allowances;
         address _owner;
+
         mapping(bytes4 => address) _facets;
         mapping(address => bytes4[]) _facetFunctionSelectors;
         bytes4[] _selectors;
@@ -140,11 +141,29 @@ library MultiSigTokenUtils {
 
     function facetAddresses() internal view returns (address[] memory) {
         DiamondStorage storage ds = getDiamondStorage();
-        address[] memory addresses_ = new address[](ds._selectors.length);
+        address[] memory temp = new address[](ds._selectors.length);
+        uint256 uniqueCount = 0;
         for (uint256 i = 0; i < ds._selectors.length; i++) {
-            addresses_[i] = ds._facets[ds._selectors[i]];
+            address facetAddr = ds._facets[ds._selectors[i]];
+            bool alreadyAdded = false;
+            for (uint256 j = 0; j < uniqueCount; j++) {
+                if (temp[j] == facetAddr) {
+                    alreadyAdded = true;
+                    break;
+                }
+            }
+            if (!alreadyAdded) {
+                temp[uniqueCount] = facetAddr;
+                uniqueCount++;
+            }
         }
-        return addresses_;
+
+        address[] memory unique = new address[](uniqueCount);
+        for (uint256 i = 0; i < uniqueCount; i++) {
+            unique[i] = temp[i];
+        }
+
+        return unique;
     }
 
     function facetAddress(bytes4 _functionSelector) internal view returns (address) {
@@ -157,4 +176,19 @@ library MultiSigTokenUtils {
         return ds._facets[_interfaceId] != address(0);
     }
 
+    function swapEthToToken() internal returns (uint swappedAmount){
+        DiamondStorage storage ds = getDiamondStorage();
+        require(msg.value > 0, "No ETH sent");
+        swappedAmount = (msg.value * 1000);
+        ds._balances[msg.sender] += swappedAmount;
+        ds._totalSupply += swappedAmount;
+    }
+
+    function withdrawEth() internal {
+        DiamondStorage storage ds = getDiamondStorage();
+        require(msg.sender== ds._owner,"Only owner can withdraw eth");
+        uint balance = address(this).balance;
+        (bool success, ) = payable(ds._owner).call{value: balance}("");
+        require(success, "ETH transfer failed");
+    }
 }

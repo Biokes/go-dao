@@ -2,6 +2,10 @@
 pragma solidity ^0.8.28;
 
 interface IERC20 {
+    struct MetaData{
+        string tokenURI;
+        string svg;
+    }
     event Transfer(address indexed from, address indexed to, uint256 value);
     event Approval(address indexed owner, address indexed spender, uint256 value);
     function name() external view returns (string memory);
@@ -14,4 +18,5 @@ interface IERC20 {
     function transfer(address to, uint256 amount) external returns (bool);
     function transferFrom(address from, address to, uint256 amount) external returns (bool);
     function mint(uint256 amountToBeminted)external;
+    function getTokenMetaData() external returns(string MetaData);
 }

@@ -5,6 +5,10 @@ import {IERC20} from "../interfaces/IERC20.sol";
 import {MultiSigTokenUtils} from "../libs/multiSigTokenLibrary.sol";
 
 contract RafikTokenFacet is IERC20{
+    modifier onlyOwner(){
+        require(msg.sender == MultiSigTokenUtils.getDiamondStorage()._owner,"You are not Authorised to execute this Action.");
+        _;
+    }
     function name() external view override returns (string memory) {
         MultiSigTokenUtils.DiamondStorage storage ds = MultiSigTokenUtils.getDiamondStorage();
         return ds._name;
@@ -64,20 +68,32 @@ contract RafikTokenFacet is IERC20{
         return true;
     }
 
-    function mint(uint256 amount) external {
+    function mint(uint256 amount) external onlyOwner {
         MultiSigTokenUtils.DiamondStorage storage ds = MultiSigTokenUtils.getDiamondStorage();
         ds._totalSupply += amount;
         ds._balances[msg.sender] += amount;
         emit Transfer(address(0), msg.sender, amount);
     }
 
-    function burn(address from, uint256 amount) external {
+    function burn(address from, uint256 amount) external onlyOwner {
         MultiSigTokenUtils.DiamondStorage storage ds = MultiSigTokenUtils.getDiamondStorage();
         require(msg.sender == ds._owner || msg.sender == from, "Only owner or holder can burn");
         require(ds._balances[from] >= amount, "Insufficient balance");
-
         ds._balances[from] -= amount;
         ds._totalSupply -= amount;
         emit Transfer(from, address(0), amount);
+    }
+
+    function getTokenMetaData() external returns(MetaData memory){
+        MultiSigTokenUtils.DiamondStorage storage ds = MultiSigTokenUtils.getDiamondStorage();
+        return ds.tokenMetaData;
+    }
+    function getTokenURI() external returns(string memory){
+         MultiSigTokenUtils.DiamondStorage storage ds = MultiSigTokenUtils.getDiamondStorage();
+        return ds.tokenMetaData.tokenURI;
+    }
+      function getSVG() external returns(string memory){
+         MultiSigTokenUtils.DiamondStorage storage ds = MultiSigTokenUtils.getDiamondStorage();
+        return ds.tokenMetaData.svg;
     }
 }

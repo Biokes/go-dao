@@ -180,3 +180,10 @@ MIT License - see the SPDX headers in individual files.
 ## Support
 
 This implementation follows the official EIP-2535 Diamond Standard specification and includes comprehensive testing and documentation for production use.
+
+
+  DiamondCutFacet deployed at:  0x12f1E87801e89bc9773567111388C28020Fe5E5c
+  Diamond deployed at:  0xa62778500329180ad58eE786C5F6Ff3835f8cD7a
+  RafikTokenFacet deployed at:  0xb641aaAA356aF78614E0Bb65f0C3920cE7C68988
+  TokenMetaDataFacet deployed at:  0x129761e142c03Da18eE8Bcb1fB1F9C291549267b
+  SwapFacet deployed at:  0x305F599fbCd667dbb9ca28960751430A1e8Fc3Ad
