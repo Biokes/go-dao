@@ -18,9 +18,6 @@ contract Diamond{
         ds._decimal = 18;
         ds._totalSupply = 1000000 * 10**18;
         ds._balances[msg.sender] = ds._totalSupply/2;
-        ds._name = "RAFIK TOKEN";
-        ds._symbol = "RFT";
-        ds._decimal = 18;
         ds.tokenMetaData.svg = SVG;
         ds.tokenMetaData.tokenURI = string(
         abi.encodePacked(
